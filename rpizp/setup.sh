@@ -1,7 +1,7 @@
 #!/bin/sh
 
 python='python3.9'
-tceload = 'tce-load'
+tceload='tce-load'
 tceaudit='tce-audit'
 
 $tceload -wi chromium-browser ntpclient python3.9
