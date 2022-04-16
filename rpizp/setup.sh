@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash -xv
 
 python='python3.9'
 tceload='tce-load'
