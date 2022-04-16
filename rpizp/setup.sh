@@ -2,10 +2,9 @@
 
 python='python3.9'
 tceload='tce-load'
-tceaudit='tce-audit'
 
-$tceload -wi chromium-browser ntpclient python3.9 squashfs.tools
-$tceload -wi compiletc python3.9-dev
+$tceload -wic chromium-browser ntpclient python3.9
+$tceload -wil compiletc python3.9-dev  squashfs-tools git
 $python -m ensurepip
 $python -m pip install --upgrade pip
 mkdir -p /tmp/pkg
@@ -16,7 +15,4 @@ sudo mksquashfs pkg/ python3.9-extras.tcz
 sudo chown tc:staff python3.9-extras.tcz 
 md5sum python3.9-extras.tcz > python3.9-extras.tcz.md5.txt
 unsquashfs -ll -d '' python3.9-extras.tcz | grep -v '^d' | sed -e 's#.* /#/#' -e 's# -> .*##' -e 1,3d > python3.9-extras.tcz.list
-$tceaudit builddb
-$tceaudit delete compiletc
-$tceaudit delete python3.9-dev
-$tceaudit delete squashfs.tools
+$tceload -wic ./python3.9-extras.tcz
