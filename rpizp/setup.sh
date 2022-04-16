@@ -11,8 +11,11 @@ $python -m pip install --upgrade pip
 /bin/rm -rf /tmp/pkg
 mkdir -p /tmp/pkg
 $python -m pip install pyppeteer aiohttp[speedups] --ignore-installed --root=/tmp/pkg
-( cd /tmp/pkg && find usr \( -type d -name __pycache__ -exec rm -rf {}  \) -o \( -type f -name "*.py[co]" \) \; ) 
-cd /tmp 
+
+( cd /tmp/pkg && find usr -type d -name __pycache__  | xargs rm -rf )
+( cd /tmp/pkg && find usr -type f -name "*.py[co]" | xargs rm -f ) 
+cd /tmp
+rm -f ${pythonpkg}-extras.tcz	
 sudo mksquashfs pkg/ ${pythonpkg}-extras.tcz
 sudo chown tc:staff ${pythonpkg}-extras.tcz 
 md5sum ${pythonpkg}-extras.tcz > ${pythonpkg}-extras.tcz.md5.txt
