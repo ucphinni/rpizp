@@ -16,7 +16,7 @@ $python -m pip install pyppeteer aiohttp[speedups] --ignore-installed --root=/tm
 ( cd /tmp/pkg && find usr -type d -name __pycache__  | xargs rm -rf )
 ( cd /tmp/pkg && find usr -type f -name "*.py[co]" | xargs rm -f )
 mkdir -p "$PYPPETEER_HOME"
-/tmp/pkg/local/bin/pyppeteer-install
+/tmp/pkg/usr/local/bin/pyppeteer-install
 cd /tmp
 rm -f ${pythonpkg}-extras.tcz	
 sudo mksquashfs pkg/ ${pythonpkg}-extras.tcz
