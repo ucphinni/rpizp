@@ -2,17 +2,19 @@
 
 python='python3.9'
 tceload='tce-load'
+pythonpkg='python3.9'
 
-$tceload -wic chromium-browser ntpclient python3.9
-$tceload -wil compiletc python3.9-dev  squashfs-tools git
+$tceload -wic chromium-browser ntpclient $pythonpkg
+$tceload -wil compiletc ${pythonpkg}-dev  squashfs-tools git
 $python -m ensurepip
 $python -m pip install --upgrade pip
+/bin/rm -rf /tmp/pkg
 mkdir -p /tmp/pkg
-$python -m pip install pyppeteer aiohttp[speedups] --root=/tmp/pkg
-( cd /tmp/pkg && find usr \( -type d -name pycache -exec rm -rf {}  \) -o \( -type f -name "*.py[co]" \) \; ) 
+$python -m pip install pyppeteer aiohttp[speedups] --ignore-installed --root=/tmp/pkg
+( cd /tmp/pkg && find usr \( -type d -name __pycache__ -exec rm -rf {}  \) -o \( -type f -name "*.py[co]" \) \; ) 
 cd /tmp 
-sudo mksquashfs pkg/ python3.9-extras.tcz
-sudo chown tc:staff python3.9-extras.tcz 
-md5sum python3.9-extras.tcz > python3.9-extras.tcz.md5.txt
-unsquashfs -ll -d '' python3.9-extras.tcz | grep -v '^d' | sed -e 's#.* /#/#' -e 's# -> .*##' -e 1,3d > python3.9-extras.tcz.list
-$tceload -wic ./python3.9-extras.tcz
+sudo mksquashfs pkg/ ${pythonpkg}-extras.tcz
+sudo chown tc:staff ${pythonpkg}-extras.tcz 
+md5sum ${pythonpkg}-extras.tcz > ${pythonpkg}-extras.tcz.md5.txt
+unsquashfs -ll -d '' ${pythonpkg}-extras.tcz | grep -v '^d' | sed -e 's#.* /#/#' -e 's# -> .*##' -e 1,3d > ${pythonpkg}-extras.tcz.list
+$tceload -ic ./${pythonpkg}-extras.tcz
