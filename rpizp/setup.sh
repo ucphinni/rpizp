@@ -5,7 +5,8 @@ tceload='tce-load'
 pythonpkg='python3.9'
 export PYPPETEER_HOME='/tmp/pkg/usr/local/share/pyppetteer'
 $tceload -wic ntpclient $pythonpkg
-$tceload -wil compiletc ${pythonpkg}-dev  squashfs-tools git
+$tceload -w compiletc ${pythonpkg}-dev  squashfs-tools git
+$tceload -il compiletc ${pythonpkg}-dev  squashfs-tools git
 $python -m ensurepip
 $python -m pip install --upgrade pip
 /bin/rm -rf /tmp/pkg
