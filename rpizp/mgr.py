@@ -2,7 +2,11 @@
 
 import asyncio
 import re
+<<<<<<< HEAD
 import pyppeteer
+=======
+from pyppeteer
+>>>>>>> branch 'main' of git@github.com:ucphinni/rpizp.git
 
 
 def get_url_from_file(urlnum: int):
@@ -21,6 +25,7 @@ def get_url_from_file(urlnum: int):
 async def main():
     await launch_browser()
 EXTENSION_PATH = 'chromium_ext'
+<<<<<<< HEAD
 CHROMIUM = '/usr/local/bin/chromium-browser'
 
 
@@ -33,6 +38,18 @@ async def launch_browser():
     browser = await pyppeteer.launch(
         args=['--start-maximized'],
         headless=False, executablePath=CHROMIUM)
+=======
+
+
+async def launch_browser():
+    urlnum = 1
+    url = get_url_from_file(urlnum)
+    if url is None:
+        raise ValueError(f"Bad url num passed {urlnum}")
+    browser = await pyppeteer.launch(
+        args=['--start-maximized'],
+        headless=False, executablePath='/usr/bin/chromium')
+>>>>>>> branch 'main' of git@github.com:ucphinni/rpizp.git
     page = await browser.newPage()
     print(f"going to page {url}")
     await page.goto(url, waitUtil='domcontentloaded',
