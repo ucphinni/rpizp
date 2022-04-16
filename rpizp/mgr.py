@@ -21,7 +21,7 @@ def get_url_from_file(urlnum: int):
 async def main():
     await launch_browser()
 EXTENSION_PATH = 'chromium_ext'
-CHROMIUM = '/usr/local/bin/chromium-browser'
+CHROMIUM = '/usr/local/pyppeteer/bin/chromium-browser'
 
 
 async def launch_browser():
