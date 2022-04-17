@@ -10,10 +10,10 @@ $tceload -wic ntpclient $pythonpkg
 $tceload -w compiletc ${pythonpkg}-dev  squashfs-tools git
 $tceload -il compiletc ${pythonpkg}-dev  squashfs-tools git
 $python -m ensurepip
-$python -m pip install --upgrade pip
+$python -m pip install --no-cache-dir --upgrade pip
 /bin/rm -rf $tmpdir/pkg
 mkdir -p $tmpdir/pkg
-$python -m pip install pyppeteer aiohttp[speedups] --ignore-installed --root=$tmpdir/pkg
+$python -m pip install pyppeteer aiohttp[speedups] --no-cache-dir  --ignore-installed --root=$tmpdir/pkg
 
 ( cd $tmpdir/pkg && find usr -type d -name __pycache__  | xargs rm -rf )
 ( cd $tmpdir/pkg && find usr -type f -name "*.py[co]" | xargs rm -f )
