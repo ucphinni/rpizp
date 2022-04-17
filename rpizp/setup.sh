@@ -18,12 +18,12 @@ $python -m pip install pyppeteer aiohttp[speedups] --ignore-installed --root=$tm
 ( cd $tmpdir/pkg && find usr -type d -name __pycache__  | xargs rm -rf )
 ( cd $tmpdir/pkg && find usr -type f -name "*.py[co]" | xargs rm -f )
 cd $tmpdir
-rm -f ${pythonpkg}-extras.tcz	
-sudo mksquashfs pkg/ ${pythonpkg}-extras.tcz
-sudo chown tc:staff ${pythonpkg}-extras.tcz 
-md5sum ${pythonpkg}-extras.tcz > ${pythonpkg}-extras.tcz.md5.txt
-unsquashfs -ll -d '' ${pythonpkg}-extras.tcz | grep -v '^d' | sed -e 's#.* /#/#' -e 's# -> .*##' -e 1,3d > ${pythonpkg}-extras.tcz.list
-$tceload -il ./${pythonpkg}-extras.tcz
+rm -f ${pythonpkg}-extras_tmp.tcz	
+sudo mksquashfs pkg/ ${pythonpkg}-extras_tmp.tcz
+sudo chown tc:staff ${pythonpkg}-extras_tmp.tcz 
+md5sum ${pythonpkg}-extras.tcz > ${pythonpkg}-extras_tmp.tcz.md5.txt
+unsquashfs -ll -d '' ${pythonpkg}-extras_tmp.tcz | grep -v '^d' | sed -e 's#.* /#/#' -e 's# -> .*##' -e 1,3d > ${pythonpkg}-extras.tcz.list
+$tceload -il ./${pythonpkg}-extras_tmp.tcz
 
 mkdir -p "$PYPPETEER_HOME"
 $tmpdir/pkg/usr/local/bin/pyppeteer-install
