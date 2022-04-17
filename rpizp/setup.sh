@@ -7,8 +7,12 @@ tmpdir="$HOME/tmp"
 mkdir -p "$tmpdir"
 export PYPPETEER_HOME="$tmpdir/pkg/usr/local/share/pyppetteer"
 $tceload -wic ntpclient $pythonpkg git
-$tceload -w compiletc ${pythonpkg}-dev  squashfs-tools
-$tceload -il compiletc ${pythonpkg}-dev  squashfs-tools
+$tceload -w compiletc
+$tceload -w ${pythonpkg}-dev 
+$tceload -w squashfs-tools 
+$tceload -il compiletc
+$tceload -il ${pythonpkg}-dev 
+$tceload -il squashfs-tools 
 $python -m ensurepip
 $python -m pip install  --upgrade pip
 /bin/rm -rf $tmpdir/pkg
