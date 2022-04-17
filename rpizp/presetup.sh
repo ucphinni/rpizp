@@ -37,7 +37,7 @@ $tceload -il ./${pythonpkg}-extras_tmp.tcz
 
 mkdir -p $PYPPETEER_HOME
 /usr/local/bin/pyppeteer-install
-(cd "$PYPPETEER_HOME" && tar cf - . && cd .. && rm -rf "$PYPPETEER_HOME") | (cd "$tmpdir/pkg" && mkdir -p $tmpdir/pkg/$PYPPETEER_HOME && tar xpf -)
+(cd "$PYPPETEER_HOME" && tar cf - . && cd .. && sudo rm -rf "$PYPPETEER_HOME") | (cd "$tmpdir/pkg" && mkdir -p $tmpdir/pkg/$PYPPETEER_HOME && tar xpf -)
 
 rm -f ${pythonpkg}-extras.tcz	
 sudo mksquashfs pkg/ ${pythonpkg}-extras.tcz
