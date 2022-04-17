@@ -3,6 +3,7 @@
 python='python3.9'
 tceload='tce-load'
 pythonpkg='python3.9'
+tcedir='/mnt/sda1/tce'
 tmpdir="$HOME/tmp"
 mkdir -p "$tmpdir"
 export PYPPETEER_HOME="$tmpdir/pkg/usr/local/share/pyppetteer"
@@ -30,7 +31,7 @@ cd $tmpdir
 rm -f ${pythonpkg}-extras_tmp.tcz	
 sudo mksquashfs pkg/ ${pythonpkg}-extras_tmp.tcz
 sudo chown tc:staff ${pythonpkg}-extras_tmp.tcz 
-md5sum ${pythonpkg}-extras.tcz > ${pythonpkg}-extras_tmp.tcz.md5.txt
+md5sum ${pythonpkg}-extras_tmp.tcz > ${pythonpkg}-extras_tmp.tcz.md5.txt
 unsquashfs -ll -d '' ${pythonpkg}-extras_tmp.tcz | grep -v '^d' | sed -e 's#.* /#/#' -e 's# -> .*##' -e 1,3d > ${pythonpkg}-extras.tcz.list
 $tceload -il ./${pythonpkg}-extras_tmp.tcz
 
@@ -42,4 +43,8 @@ sudo mksquashfs pkg/ ${pythonpkg}-extras.tcz
 sudo chown tc:staff ${pythonpkg}-extras.tcz 
 md5sum ${pythonpkg}-extras.tcz > ${pythonpkg}-extras.tcz.md5.txt
 unsquashfs -ll -d '' ${pythonpkg}-extras.tcz | grep -v '^d' | sed -e 's#.* /#/#' -e 's# -> .*##' -e 1,3d > ${pythonpkg}-extras.tcz.list
+echo "${pythonpkg}.tcz" > ${pythonpkg}.tcz.dep
 $tceload -ic ./${pythonpkg}-extras.tcz
+cp ./${pythonpkg}-extras.tcz ${pythonpkg}-extras.tcz.md5.txt ${pythonpkg}.tcz.dep $tcedir/optional
+
+
