@@ -6,13 +6,13 @@ pythonpkg='python3.9'
 tcedir='/mnt/sda1/tce'
 tmpdir="$HOME/tmp"
 mkdir -p "$tmpdir"
-export PYPPETEER_HOME="$tmpdir/pkg/usr/local/share/pyppetteer"
+export PYPPETEER_HOME="/usr/local/share/pyppetteer"
 $tceload -w ntpclient
 $tceload -w $pythonpkg
 $tceload -w git
-$tceload -ic ntpclient
-$tceload -ic $pythonpkg
-$tceload -ic git
+$tceload -i ntpclient
+$tceload -i $pythonpkg
+$tceload -i git
 $tceload -w compiletc
 $tceload -w ${pythonpkg}-dev 
 $tceload -w squashfs-tools 
@@ -36,7 +36,8 @@ unsquashfs -ll -d '' ${pythonpkg}-extras_tmp.tcz | grep -v '^d' | sed -e 's#.* /
 $tceload -il ./${pythonpkg}-extras_tmp.tcz
 
 mkdir -p "$PYPPETEER_HOME"
-$tmpdir/pkg/usr/local/bin/pyppeteer-install
+/usr/local/bin/pyppeteer-install
+(cd "$PYPPETEER_HOME" && tar cf - . && cd .. && rm -rf "$PYPPETEER_HOME") | (cd "$tmpdir/pkg" && mkdir -p "$tmpdir/pkg/$PYPPETEER_HOME" && tar xpf -)
 
 rm -f ${pythonpkg}-extras.tcz	
 sudo mksquashfs pkg/ ${pythonpkg}-extras.tcz
