@@ -22,12 +22,12 @@ $tceload -il squashfs-tools
 $python -m ensurepip
 $python -m pip install  --upgrade pip
 /bin/rm -rf $tmpdir/pkg
-mkdir -p $tmpdir/pkg
+mkdir -p "$tmpdir/pkg"
 $python -m pip install pyppeteer aiohttp[speedups] --ignore-installed --root=$tmpdir/pkg
 
 ( cd $tmpdir/pkg && find usr -type d -name __pycache__  | xargs rm -rf )
 ( cd $tmpdir/pkg && find usr -type f -name "*.py[co]" | xargs rm -f )
-cd $tmpdir
+cd "$tmpdir"
 rm -f ${pythonpkg}-extras_tmp.tcz	
 sudo mksquashfs pkg/ ${pythonpkg}-extras_tmp.tcz
 sudo chown tc:staff ${pythonpkg}-extras_tmp.tcz 
@@ -35,9 +35,9 @@ md5sum ${pythonpkg}-extras_tmp.tcz > ${pythonpkg}-extras_tmp.tcz.md5.txt
 unsquashfs -ll -d '' ${pythonpkg}-extras_tmp.tcz | grep -v '^d' | sed -e 's#.* /#/#' -e 's# -> .*##' -e 1,3d > ${pythonpkg}-extras.tcz.list
 $tceload -il ./${pythonpkg}-extras_tmp.tcz
 
-mkdir -p $PYPPETEER_HOME
+mkdir -p "$PYPPETEER_HOME"
 /usr/local/bin/pyppeteer-install
-(cd "$PYPPETEER_HOME" && tar cf - . && cd .. && sudo rm -rf "$PYPPETEER_HOME") | (cd "$tmpdir/pkg" && mkdir -p $tmpdir/pkg/$PYPPETEER_HOME && tar xpf -)
+(cd "$PYPPETEER_HOME" && tar cf - . && cd .. && sudo rm -rf "$PYPPETEER_HOME") | (cd "$tmpdir/pkg/$PYPPETEER_HOME" && mkdir -p "$tmpdir/pkg/$PYPPETEER_HOME" && tar xpf -)
 
 rm -f ${pythonpkg}-extras.tcz	
 sudo mksquashfs pkg/ ${pythonpkg}-extras.tcz
