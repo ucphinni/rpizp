@@ -6,7 +6,7 @@ pythonpkg='python3.9'
 tcedir='/mnt/sda1/tce'
 tmpdir="$HOME/tmp"
 mkdir -p $tmpdir
-export PYPPETEER_HOME="/usr/local/share/pyppetteer"
+export PYPPETEER_HOME="/usr/local/share/pyppeteer"
 $tceload -w ntpclient
 $tceload -w $pythonpkg
 $tceload -w git
