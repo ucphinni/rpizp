@@ -35,7 +35,7 @@ md5sum ${pythonpkg}-extras_tmp.tcz > ${pythonpkg}-extras_tmp.tcz.md5.txt
 unsquashfs -ll -d '' ${pythonpkg}-extras_tmp.tcz | grep -v '^d' | sed -e 's#.* /#/#' -e 's# -> .*##' -e 1,3d > ${pythonpkg}-extras.tcz.list
 $tceload -il ./${pythonpkg}-extras_tmp.tcz
 
-mkdir -p "$PYPPETEER_HOME"
+sudo mkdir -p "$PYPPETEER_HOME"
 /usr/local/bin/pyppeteer-install
 (cd "$PYPPETEER_HOME" && tar cf - . && cd .. && sudo rm -rf "$PYPPETEER_HOME") | (cd "$tmpdir/pkg/$PYPPETEER_HOME" && mkdir -p "$tmpdir/pkg/$PYPPETEER_HOME" && tar xpf -)
 
