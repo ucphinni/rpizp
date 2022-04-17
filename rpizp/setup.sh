@@ -6,7 +6,12 @@ pythonpkg='python3.9'
 tmpdir="$HOME/tmp"
 mkdir -p "$tmpdir"
 export PYPPETEER_HOME="$tmpdir/pkg/usr/local/share/pyppetteer"
-$tceload -wic ntpclient $pythonpkg git
+$tceload -w ntpclient
+$tceload -w $pythonpkg
+$tceload -w git
+$tceload -ic ntpclient
+$tceload -ic $pythonpkg
+$tceload -ic git
 $tceload -w compiletc
 $tceload -w ${pythonpkg}-dev 
 $tceload -w squashfs-tools 
