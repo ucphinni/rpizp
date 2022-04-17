@@ -20,19 +20,16 @@ def get_url_from_file(urlnum: int):
 
 async def main():
     await launch_browser()
-EXTENSION_PATH = 'chromium_ext'
-CHROMIUM = '/usr/local/pyppeteer/bin/chromium-browser'
 
 
 async def launch_browser():
-    global CHROMIUM
     urlnum = 1
     url = get_url_from_file(urlnum)
     if url is None:
         raise ValueError(f"Bad url num passed {urlnum}")
     browser = await pyppeteer.launch(
         args=['--start-maximized'],
-        headless=False, executablePath=CHROMIUM)
+        headless=False)
     page = await browser.newPage()
     print(f"going to page {url}")
     await page.goto(url, waitUtil='domcontentloaded',
