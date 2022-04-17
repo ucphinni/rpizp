@@ -3,21 +3,23 @@
 python='python3.9'
 tceload='tce-load'
 pythonpkg='python3.9'
-export PYPPETEER_HOME='/tmp/pkg/usr/local/share/pyppetteer'
+tmpdir="$HOME/tmp"
+mkdir -p "$tmpdir"
+export PYPPETEER_HOME="$tmpdir/pkg/usr/local/share/pyppetteer"
 $tceload -wic ntpclient $pythonpkg
 $tceload -w compiletc ${pythonpkg}-dev  squashfs-tools git
 $tceload -il compiletc ${pythonpkg}-dev  squashfs-tools git
 $python -m ensurepip
 $python -m pip install --upgrade pip
-/bin/rm -rf /tmp/pkg
-mkdir -p /tmp/pkg
-$python -m pip install pyppeteer aiohttp[speedups] --ignore-installed --root=/tmp/pkg
+/bin/rm -rf $tmpdir/pkg
+mkdir -p $tmpdir/pkg
+$python -m pip install pyppeteer aiohttp[speedups] --ignore-installed --root=$tmpdir/pkg
 
-( cd /tmp/pkg && find usr -type d -name __pycache__  | xargs rm -rf )
-( cd /tmp/pkg && find usr -type f -name "*.py[co]" | xargs rm -f )
+( cd $tmpdir/pkg && find usr -type d -name __pycache__  | xargs rm -rf )
+( cd $tmpdir/pkg && find usr -type f -name "*.py[co]" | xargs rm -f )
 mkdir -p "$PYPPETEER_HOME"
-/tmp/pkg/usr/local/bin/pyppeteer-install
-cd /tmp
+$tmpdir/pkg/usr/local/bin/pyppeteer-install
+cd $tmpdir
 rm -f ${pythonpkg}-extras.tcz	
 sudo mksquashfs pkg/ ${pythonpkg}-extras.tcz
 sudo chown tc:staff ${pythonpkg}-extras.tcz 
