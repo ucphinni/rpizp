@@ -36,6 +36,7 @@ sudo chown tc:staff ${pythonpkg}-extras.tcz
 md5sum ${pythonpkg}-extras.tcz > ${pythonpkg}-extras.tcz.md5.txt
 unsquashfs -ll -d '' ${pythonpkg}-extras.tcz | grep -v '^d' | sed -e 's#.* /#/#' -e 's# -> .*##' -e 1,3d > ${pythonpkg}-extras.tcz.list
 $tceload -i ./${pythonpkg}-extras.tcz
+echo "${pythonpkg}" > ${pythonpkg}-extras.tcz.dep
 cp ./${pythonpkg}-extras.tcz ${pythonpkg}-extras.tcz.md5.txt ${pythonpkg}-extras.tcz.dep $tcedir/optional
 
 
