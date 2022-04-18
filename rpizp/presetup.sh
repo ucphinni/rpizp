@@ -11,10 +11,10 @@ $tceload -w ntpclient
 $tceload -w chromium-browser
 $tceload -w $pythonpkg
 $tceload -w git
-$tceload -ic ntpclient
-$tceload -ic chromium-browser
-$tceload -ic $pythonpkg
-$tceload -ic git
+$tceload -i ntpclient
+$tceload -i chromium-browser
+$tceload -i $pythonpkg
+$tceload -i git
 $tceload -w compiletc
 $tceload -w ${pythonpkg}-dev 
 $tceload -w squashfs-tools 
