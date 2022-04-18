@@ -35,7 +35,7 @@ sudo mksquashfs pkg/ ${pythonpkg}-extras.tcz
 sudo chown tc:staff ${pythonpkg}-extras.tcz 
 md5sum ${pythonpkg}-extras.tcz > ${pythonpkg}-extras.tcz.md5.txt
 unsquashfs -ll -d '' ${pythonpkg}-extras.tcz | grep -v '^d' | sed -e 's#.* /#/#' -e 's# -> .*##' -e 1,3d > ${pythonpkg}-extras.tcz.list
-$tceload -ic ./${pythonpkg}-extras.tcz
+$tceload -i ./${pythonpkg}-extras.tcz
 cp ./${pythonpkg}-extras.tcz ${pythonpkg}-extras.tcz.md5.txt ${pythonpkg}-extras.tcz.dep $tcedir/optional
 
 
