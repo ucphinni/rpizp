@@ -42,7 +42,7 @@ sudo mkdir -p "$PYPPETEER_HOME"
 sudo chmod 777 "$PYPPETEER_HOME"
 /usr/local/bin/pyppeteer-install
 mkdir -p $tmpdir/pkg2$PYPPETEER_HOME
-(tar c -f - -C "$PYPPETEER_HOME" . ) | tar x -O --numeric-owner -C "$tmpdir/pkg2"
+tar c -f - -C "$PYPPETEER_HOME" .  | tar x -f - --numeric-owner -C "$tmpdir/pkg2"
 
 pyppeteerpkg='pyppeteer'
 
