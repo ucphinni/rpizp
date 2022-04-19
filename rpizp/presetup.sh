@@ -26,12 +26,13 @@ mkdir -p "$tmpdir/pkg"
 
 cd "$tmpdir"
 
-export PYPPETEER_HOME=/usr/local/share/pyppeteer
-sudo mkdir -p "$PYPPETEER_HOME"
-sudo chmod 777 "$PYPPETEER_HOME"
+export PUPPETEER_HOME=/usr/local/share/puppeteer
+sudo mkdir -p "$PUPPETEER_HOME"
+sudo chmod 777 "$PUPPETEER_HOME"
+( cd "$PUPPETEER_HOME" && npm install puppeteer )
 
-mkdir -p $tmpdir/pkg$PYPPETEER_HOME
-tar c -f - -C "$PYPPETEER_HOME" .  | tar x -f - --numeric-owner -C "$tmpdir/pkg"
+mkdir -p $tmpdir/pkg$PUPPETEER_HOME
+tar c -f - -C "$PUPPETEER_HOME" .  | tar x -f - --numeric-owner -C "$tmpdir/pkg"
 
 sudo mksquashfs pkg/ ${nodepkg}-extras.tcz
 sudo chown tc:staff ${nodepkg}-extras.tcz 
