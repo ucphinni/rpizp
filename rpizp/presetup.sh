@@ -25,7 +25,7 @@ $tceload -il squashfs-tools
 mkdir -p "$tmpdir/pkg"
 
 cd "$tmpdir"
-
+firefox-getLatest.sh -e > /dev/null
 export PUPPETEER_HOME=/usr/local/share/puppeteer
 sudo mkdir -p "$PUPPETEER_HOME"
 sudo chmod 777 "$PUPPETEER_HOME"
