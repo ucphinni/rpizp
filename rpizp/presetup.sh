@@ -36,14 +36,14 @@ sudo chown tc:staff ${pythonpkg}-extras.tcz
 md5sum ${pythonpkg}-extras.tcz > ${pythonpkg}-extras.tcz.md5.txt
 unsquashfs -ll -d '' ${pythonpkg}-extras.tcz | grep -v '^d' | sed -e 's#.* /#/#' -e 's# -> .*##' -e 1,3d > ${pythonpkg}-extras.tcz.list
 $tceload -i ./${pythonpkg}-extras.tcz
-echo "${pythonpkg}" > ${pythonpkg}-extras.tcz.dep
+echo "${pythonpkg}.tcz" > ${pythonpkg}-extras.tcz.dep
 cp ./${pythonpkg}-extras.tcz ${pythonpkg}-extras.tcz.md5.txt ${pythonpkg}-extras.tcz.dep $tcedir/optional
 
 export PYPPETEER_HOME=/usr/local/share/pyppeteer
 mkdir -p "$PYPPETEER_HOME"
 /usr/local/bin/pyppeteer-install
 mkdir -p $tmpdir/pkg2$PYPPETEER_HOME
-(tar c -f - -C $"$PYPPETEER_HOME" . ) | tar x -O --numeric-owner -C "$tmpdir/pkg2"
+(tar c -f - -C "$PYPPETEER_HOME" . ) | tar x -O --numeric-owner -C "$tmpdir/pkg2"
 
 pyppeteerpkg='pyppeteer'
 
@@ -52,7 +52,7 @@ sudo chown tc:staff ${pyppeteerpkg}-extras.tcz
 md5sum ${pyppeteerpkg}-extras.tcz > ${pyppeteerpkg}-extras.tcz.md5.txt
 unsquashfs -ll -d '' ${pyppeteerpkg}-extras.tcz | grep -v '^d' | sed -e 's#.* /#/#' -e 's# -> .*##' -e 1,3d > ${pyppeteerpkg}-extras.tcz.list
 $tceload -i ./${pyppeteerpkg}-extras.tcz
-echo "${pythonpkg}" > ${pyppeteerpkg}-extras.tcz.dep
+echo "${pythonpkg}-extras.tcz" > ${pyppeteerpkg}-extras.tcz.dep
 cp ./${pyppeteerpkg}-extras.tcz ${pyppeteerpkg}-extras.tcz.md5.txt ${pyppeteerpkg}-extras.tcz.dep $tcedir/optional
 
 
