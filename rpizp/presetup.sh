@@ -39,6 +39,7 @@ cp ./${pythonpkg}-extras.tcz ${pythonpkg}-extras.tcz.md5.txt ${pythonpkg}-extras
 
 export PYPPETEER_HOME=/usr/local/share/pyppeteer
 mkdir -p "$PYPPETEER_HOME"
+chmod 777 "$PYPPETEER_HOME"
 /usr/local/bin/pyppeteer-install
 mkdir -p $tmpdir/pkg2$PYPPETEER_HOME
 (tar c -f - -C "$PYPPETEER_HOME" . ) | tar x -O --numeric-owner -C "$tmpdir/pkg2"
