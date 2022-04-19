@@ -43,7 +43,7 @@ export PYPPETEER_HOME=/usr/local/share/pyppeteer
 mkdir -p "$PYPPETEER_HOME"
 /usr/local/bin/pyppeteer-install
 mkdir -p $tmpdir/pkg2$PYPPETEER_HOME
-(cd "$PYPPETEER_HOME" && tar cf - . ) | (cd $tmpdir/pkg2 && tar xpf)
+(tar c -f - -C $"$PYPPETEER_HOME" . ) | tar x -O --numeric-owner -C "$tmpdir/pkg2"
 
 pyppeteerpkg='pyppeteer'
 
