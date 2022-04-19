@@ -8,11 +8,9 @@ tmpdir="$HOME/tmp"
 mkdir -p $tmpdir
 export PYPPETEER_HOME="/usr/local/share/pyppeteer"
 $tceload -w ntpclient
-$tceload -w chromium-browser
 $tceload -w $pythonpkg
 $tceload -w git
 $tceload -i ntpclient
-$tceload -i chromium-browser
 $tceload -i $pythonpkg
 $tceload -i git
 $tceload -w compiletc
