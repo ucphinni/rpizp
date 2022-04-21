@@ -1,43 +1,58 @@
 #!/bin/bash -xv
 
+pip='pip3.9'
+python='python3.9'
 tceload='tce-load'
-nodepkg='node'
-tcedir='/mnt/sda1/tce'
+pythonpkg='python3.9'
+zoommt='zoommon'
 tmpdir="$HOME/tmp"
-mkdir -p $tmpdir
-
+mkdir -p "$tmpdir"
+export PYPPETEER_HOME="/usr/local/share/zoommon"
 $tceload -w ntpclient
-$tceload -w firefox_getLatest
-$tceload -w node
+$tceload -w $pythonpkg
 $tceload -w git
-$tceload -w squashfs-tools 
 $tceload -w compiletc
+$tceload -w ${pythonpkg}-dev 
 $tceload -w squashfs-tools 
+$tceload -w rsync 
+
 $tceload -i ntpclient
-$tceload -i firefox_getLatest
-$tceload -i node
+$tceload -i $pythonpkg
 $tceload -i git
-$tceload -i squashfs-tools 
 $tceload -il compiletc
+$tceload -il ${pythonpkg}-dev 
 $tceload -il squashfs-tools 
+$tceload -il rsync
 
+if ! which $pipv
+then
+	$python -m ensurepip
+	$python -m pip install  --upgrade pip
+fi
 /bin/rm -rf $tmpdir/pkg
-mkdir -p "$tmpdir/pkg"
+mkdir -p $tmpdir/pkg
+$python -m pip install playwright aiohttp[speedups] --ignore-installed --root=$tmpdir/pkg
 
-cd "$tmpdir"
-firefox-getLatest.sh -e > /dev/null
-export PUPPETEER_HOME=/usr/local/share/puppeteer
-sudo mkdir -p "$PUPPETEER_HOME"
-sudo chmod 777 "$PUPPETEER_HOME"
-( cd "$PUPPETEER_HOME" && npm install puppeteer )
+( cd $tmpdir/pkg && find usr -type d -name __pycache__  | xargs rm -rf )
+( cd $tmpdir/pkg && find usr -type f -name "*.py[co]" | xargs rm -f )
+cd $tmpdir
+rm -f ${pythonpkg}-extras.tcz	
+sudo mksquashfs pkg/ ${pythonpkg}-extras.tcz
+sudo chown tc:staff ${pythonpkg}-extras.tcz 
+md5sum ${pythonpkg}-extras.tcz > ${pythonpkg}-extras.tcz.md5.txt
+unsquashfs -ll -d '' ${pythonpkg}-extras.tcz | grep -v '^d' | sed -e 's#.* /#/#' -e 's# -> .*##' -e 1,3d > ${pythonpkg}-extras.tcz.list
+$tceload -i ./${pythonpkg}-extras.tcz
 
-mkdir -p $tmpdir/pkg$PUPPETEER_HOME
-tar c -f - -C "$PUPPETEER_HOME" .  | tar x -f - --numeric-owner -C "$tmpdir/pkg"
+sudo /bin/rm -rf  "$PYPPETEER_HOME"
+sudo mkdir -p "$PYPPETEER_HOME/pw-browsers"
+sudo chown 777 "$PYPPETEER_HOME" "$PYPPETEER_HOME/pw-browsers"
 
-sudo mksquashfs pkg/ ${nodepkg}-extras.tcz
-sudo chown tc:staff ${nodepkg}-extras.tcz 
-md5sum ${nodepkg}-extras.tcz > ${nodepkg}-extras.tcz.md5.txt
-unsquashfs -ll -d '' ${nodepkg}-extras.tcz | grep -v '^d' | sed -e 's#.* /#/#' -e 's# -> .*##' -e 1,3d > ${nodepkg}-extras.tcz.list
-$tceload -i ./${nodepkg}-extras.tcz
-echo "${nodepkg}.tcz" > ${nodepkg}-extras.tcz.dep
-cp ./${nodepkg}-extras.tcz ${nodepkg}-extras.tcz.md5.txt ${nodepkg}-extras.tcz.dep $tcedir/optional
+export PLAYWRIGHT_BROWSERS_PATH "$PYPPETEER_HOME/pw-browsers"
+$python -m playwright install
+rsync --append-verify --inplace --remove-source-files --delete -lptAXH --force "$PYPPETEER_HOME" $tmpdir/pkg2 
+rm -f ${zoommt}-extras.tcz	
+sudo mksquashfs pkg2/ ${zoommt}-extras.tcz
+sudo chown tc:staff ${zoommt}-extras.tcz 
+md5sum ${zoommt}-extras.tcz > ${zoommt}-extras.tcz.md5.txt
+unsquashfs -ll -d '' ${zoommt}-extras.tcz | grep -v '^d' | sed -e 's#.* /#/#' -e 's# -> .*##' -e 1,3d > ${zoommt}-extras.tcz.list
+$tceload -i ./${zoommt}-extras.tcz
