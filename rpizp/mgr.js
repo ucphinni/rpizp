@@ -1,20 +1,14 @@
 /**
  * 
  */
-const { writeFile } = require('fs');
-const { promisify } = require('util');
-
-const { Builder, By, Key, promise, until } = require('selenium-webdriver');
-const firefox = require('selenium-webdriver/firefox');
-
-promise.USE_PROMISE_MANAGER = false;
-
-
-const binary = new firefox.Binary('/usr/local/bin/firefox');
-const driver = new Builder()
-.forBrowser('firefox')
-.setFirefoxOptions(new firefox.Options().setBinary(binary))
-.build();
+var webdriver = require('selenium-webdriver');
+ 
+var driver = new webdriver.Builder().
+   withCapabilities(webdriver.Capabilities.firefox()).
+   build();
+ 
+driver.get('http://www.lambdatest.com');
+driver.quit();
 
 async function main() {
   await driver.get('https://developer.mozilla.org/');
@@ -29,4 +23,3 @@ async function main() {
   await driver.quit();
 }
 
-main();
