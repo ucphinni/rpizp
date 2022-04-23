@@ -2,10 +2,11 @@
  * 
  */
 var webdriver = require('selenium-webdriver');
- 
-var driver = new webdriver.Builder().
-   withCapabilities(webdriver.Capabilities.firefox()).
-   build();
+var firefox = require('selenium-webdriver/firefox')
+var options =  new firefox.Options();
+options.addArguments('-kiosk');
+var driver = await new Builder().forBrowser("firefox").setFirefoxOptions(options).build();
+driver.manage().window().maximize();
  
 driver.get('http://www.lambdatest.com');
 driver.wait(async () => {
