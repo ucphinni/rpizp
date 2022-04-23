@@ -5,14 +5,15 @@ var webdriver = require('selenium-webdriver');
 var firefox = require('selenium-webdriver/firefox')
 var options =  new firefox.Options();
 options.addArguments('-kiosk');
-var driver = await new Builder().forBrowser("firefox").setFirefoxOptions(options).build();
-driver.manage().window().maximize();
- 
-driver.get('http://www.lambdatest.com');
+var driver = new webdriver.Builder().forBrowser("firefox").setFirefoxOptions(options).build();
 driver.wait(async () => {
     const readyState = await driver.executeScript('return document.readyState');
     return readyState === 'complete';
   });
+
+driver.manage().window().maximize();
+ 
+driver.get('http://www.lambdatest.com');
 // driver.quit();
 
 async function main() {
