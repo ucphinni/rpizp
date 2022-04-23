@@ -2,10 +2,11 @@
  * 
  */
 var webdriver = require('selenium-webdriver');
- 
+var firefoxOptions = {'args':['--kiosk']};
+var firefoxCapabilities = webdriver.Capabilities.firefox()
+firefoxCapabilities.set('firefoxOptions',firefoxOptions);
 var driver = new webdriver.Builder().
-   withCapabilities(webdriver.Capabilities.firefox().add_argument('-kiosk')).
-   build();
+   withCapabilities(firefoxCapabilities).build();
  
 driver.get('http://www.lambdatest.com');
 driver.wait(async () => {
