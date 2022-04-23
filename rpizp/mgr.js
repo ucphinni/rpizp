@@ -8,6 +8,10 @@ var driver = new webdriver.Builder().
    build();
  
 driver.get('http://www.lambdatest.com');
+driver.wait(async () => {
+    const readyState = await driver.executeScript('return document.readyState');
+    return readyState === 'complete';
+  });
 driver.quit();
 
 async function main() {
