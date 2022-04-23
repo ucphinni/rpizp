@@ -5,6 +5,8 @@ var webdriver = require('selenium-webdriver');
  
 var driver = new webdriver.Builder().
    withCapabilities(webdriver.Capabilities.firefox()).
+   add_argument('-kiosk').
+   add_argument('-private-window').
    build();
  
 driver.get('http://www.lambdatest.com');
@@ -12,7 +14,7 @@ driver.wait(async () => {
     const readyState = await driver.executeScript('return document.readyState');
     return readyState === 'complete';
   });
-driver.quit();
+// driver.quit();
 
 async function main() {
   await driver.get('https://developer.mozilla.org/');
