@@ -4,9 +4,7 @@
 var webdriver = require('selenium-webdriver');
  
 var driver = new webdriver.Builder().
-   withCapabilities(webdriver.Capabilities.firefox()).
-   add_argument('-kiosk').
-   add_argument('-private-window').
+   withCapabilities(webdriver.Capabilities.firefox().add_argument('-kiosk')).
    build();
  
 driver.get('http://www.lambdatest.com');
